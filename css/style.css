@@ -54,6 +54,49 @@ main {
   padding: 20px 0;
 }
 
+/* Ticket layout */
+
+.ticket-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.event {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: 250px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.event h3 {
+  margin-top: 0;
+}
+
+.event h4 {
+  color: #444;
+  margin: 10px 0;
+}
+
+/* Better button */
+
+.button {
+  display: inline-block;
+  background: #8b0000;
+  color: white;
+  padding: 10px 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.button:hover {
+  background: #a80000;
+}
+
 /* Footer */
 footer {
   background: #111;
