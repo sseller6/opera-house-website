@@ -1,0 +1,16 @@
+{
+  "name": "kooskia-opera-house",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website, ticket sales, and box-office admin for the Kooskia Opera House.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "db:init:local": "wrangler d1 execute kooskia-opera-house --local --file=schema.sql",
+    "db:demo:local": "wrangler d1 execute kooskia-opera-house --local --file=scripts/demo-data.sql",
+    "db:init:remote": "wrangler d1 execute kooskia-opera-house --remote --file=schema.sql",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  }
+}

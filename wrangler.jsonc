@@ -1,0 +1,40 @@
+{
+  // Cloudflare Workers config for the Kooskia Opera House website.
+  // See SETUP.md for step-by-step deploy instructions.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kooskia-opera-house",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-09-01",
+
+  // Static website files (public site + admin pages).
+  // Only /api/* requests run code; everything else is served as plain files.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+
+  // The database that stores shows, showtimes, and ticket orders.
+  // Replace database_id with the ID printed by:  npx wrangler d1 create kooskia-opera-house
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "kooskia-opera-house",
+      "database_id": "e2fead9e-a202-458e-bff8-b1f844cc30d6"
+    }
+  ],
+
+  // Every 5 minutes: release seats held by people who never finished paying.
+  "triggers": { "crons": ["*/5 * * * *"] },
+
+  // Non-secret settings. Secrets (passwords, Square token) are set separately — see SETUP.md.
+  "vars": {
+    "MAX_SEATS_PER_SHOW": "140",
+    "MAX_TICKETS_PER_ORDER": "20",
+    "HOLD_MINUTES": "20",
+    "TIMEZONE": "America/Los_Angeles",
+    "SQUARE_ENVIRONMENT": "production",
+    "DEMO_PAYMENTS": "false"
+  }
+}

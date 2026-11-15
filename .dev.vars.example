@@ -1,0 +1,11 @@
+# Local development secrets. Copy this file to ".dev.vars" (it is git-ignored).
+# In production, set these with `npx wrangler secret put NAME` or in the Cloudflare dashboard.
+
+ADMIN_PASSWORD=change-me
+
+# Leave the Square values blank and set DEMO_PAYMENTS=true to try checkout without Square.
+DEMO_PAYMENTS=true
+# SQUARE_ENVIRONMENT=sandbox
+# SQUARE_ACCESS_TOKEN=
+# SQUARE_LOCATION_ID=
+# SQUARE_WEBHOOK_SIGNATURE_KEY=

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buy Tickets | Kooskia Opera House</title>
+  <meta name="description" content="Choose a showtime and seats for a performance at the Kooskia Opera House.">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/site.css">
+</head>
+<body data-page="tickets">
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="/">
+      <img src="/images/logo.jpg" alt="" width="70" height="56">
+      <span class="brand-name">Kooskia Opera House<small>Theatre · Kooskia, Idaho</small></span>
+    </a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/shows.html" aria-current="page">Shows</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/visit.html">Visit &amp; Contact</a></li>
+      <li><a class="btn btn-gold" href="/shows.html">Buy Tickets</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="section" style="padding-top:48px">
+    <div class="wrap">
+      <p style="margin-bottom:24px"><a href="/shows.html">&larr; All shows</a></p>
+      <div id="ticket-app">
+        <div class="skeleton" style="min-height:300px"></div>
+      </div>
+    </div>
+  </section>
+
+  <template id="ticket-template">
+    <div class="show-header">
+      <img data-f="image" alt="">
+      <div>
+        <span class="eyebrow">Buy Tickets</span>
+        <h1 data-f="title" style="font-size:clamp(2rem,4vw,3rem)"></h1>
+        <p class="lead" data-f="subtitle"></p>
+        <p class="desc" data-f="description"></p>
+      </div>
+    </div>
+
+    <div class="ticket-layout">
+      <form id="ticket-form" novalidate>
+        <div id="form-alert"></div>
+
+        <div class="step" id="step-time">
+          <h2 class="step-title"><span class="step-num">1</span> Choose a showtime</h2>
+          <div class="time-grid" id="time-grid" role="radiogroup" aria-label="Showtimes"></div>
+        </div>
+
+        <div class="step disabled" id="step-seats">
+          <h2 class="step-title"><span class="step-num">2</span> Choose your seats</h2>
+          <div class="seat-row" data-tier="premium">
+            <div>
+              <h4>Premium Seating <span class="seat-price" data-price></span></h4>
+              <p>Our best seats, closest to the stage.</p>
+              <span class="seat-left" data-left></span>
+            </div>
+            <div class="stepper">
+              <button type="button" data-dec aria-label="Remove a premium seat">&minus;</button>
+              <output data-qty aria-live="polite">0</output>
+              <button type="button" data-inc aria-label="Add a premium seat">+</button>
+            </div>
+          </div>
+          <div class="seat-row" data-tier="regular">
+            <div>
+              <h4>Regular Seating <span class="seat-price" data-price></span></h4>
+              <p>Great views from throughout the hall.</p>
+              <span class="seat-left" data-left></span>
+            </div>
+            <div class="stepper">
+              <button type="button" data-dec aria-label="Remove a regular seat">&minus;</button>
+              <output data-qty aria-live="polite">0</output>
+              <button type="button" data-inc aria-label="Add a regular seat">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="step disabled" id="step-info">
+          <h2 class="step-title"><span class="step-num">3</span> Your details</h2>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="f-name">Full name</label>
+              <input id="f-name" name="name" autocomplete="name" required maxlength="100">
+            </div>
+            <div class="field">
+              <label for="f-email">Email <small>(your receipt is sent here)</small></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone <small>(optional)</small></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <aside class="summary" aria-live="polite">
+        <h3 data-f="title"></h3>
+        <div class="s-when" id="s-when">Choose a showtime</div>
+        <div class="summary-lines" id="s-lines"><div class="summary-line muted">No seats selected yet</div></div>
+        <div class="summary-total"><span>Total</span><span id="s-total">$0.00</span></div>
+        <button class="btn btn-gold btn-block" id="checkout-btn" type="submit" form="ticket-form" disabled>Continue to Payment</button>
+        <p class="fine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>You'll pay on Square's secure checkout page. Your seats are held for 20 minutes while you pay.</span></p>
+        <ul class="policy-list" id="policy-list">
+          <li>Bring your email receipt for admission.</li>
+          <li>All sales are final. No refunds.</li>
+          <li>For specific seating, call (208) 451-5152.</li>
+        </ul>
+      </aside>
+    </div>
+  </template>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/images/logo.jpg" alt="Kooskia Opera House logo" loading="lazy">
+        <p>Live theatre and community events in a historic hall on Main Street.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/shows.html">Shows &amp; Tickets</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/about.html#gallery">Gallery</a></li>
+          <li><a href="/visit.html">Visit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>21 Main St</li>
+          <li>Kooskia, ID 83539</li>
+          <li><a href="https://maps.google.com/?q=21+Main+St+Kooskia+ID+83539" target="_blank" rel="noopener">Get directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+12084515152">(208) 451-5152</a></li>
+          <li><a href="mailto:theoldkooskiaoperahouse@gmail.com">theoldkooskiaoperahouse@gmail.com</a></li>
+          <li>Facebook: Kooskia Opera House</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> Kooskia Opera House. All rights reserved.</span>
+      <a href="/admin/">Staff sign-in</a>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer"><button class="lightbox-close" aria-label="Close">&times;</button><img alt=""></div>
+<script src="/js/site.js"></script>
+</body>
+</html>
